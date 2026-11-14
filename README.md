@@ -1,4 +1,4 @@
-# 😀 Fridge Manager
+# 🍑 Fridge Manager
 
 
 
