@@ -1,15 +1,15 @@
 import time
 
 from arduino.app_utils import App
+from arduino.app_bricks.web_ui import WebUI
 
-print("Hello world!")
+# Initialize the Web UI server
+web_ui = WebUI()
 
+# Add a simple REST API endpoint
+web_ui.expose_api("GET", "/hello", lambda: {"message": "Hello, world!"})
 
-def loop():
-    """This function is called repeatedly by the App framework."""
-    # You can replace this with any code you want your App to run repeatedly.
-    time.sleep(10)
+# Send a welcome message over WebSocket to each client that connects
+web_ui.on_connect(lambda sid: web_ui.send_message("hello", {"message": f"Hello, {sid}!"}))
 
-
-# See: https://docs.arduino.cc/software/app-lab/tutorials/getting-started/#app-run
-App.run(user_loop=loop)
+App.run()
