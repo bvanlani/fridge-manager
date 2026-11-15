@@ -12,20 +12,24 @@ SPDX-License-Identifier: MPL-2.0
     <title>Fridge Manager</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+          --color-primary: #8EBAE6;
+          --color-secondary: #EDF1F4;
+        }
+      </style>
   </head>
   
   <body>
-  <header>
+  <header class = "bg-primary">
     <h1 class="font-bold text-4xl text-center p-7.5"> Fridge Manager Admin Panel: </h1>
   </header>
 
-
-
-  <main>
+  <main class = "bg-secondary">
     <div class = "grid grid-row-2">
-        <div class = "text-lg text-center p-4">
-          <p class = "p-4">Fruit Type:</p>
-          <p class = "p-4">Temperature:</p> 
+        <div class = "grid grid-col 3 text-lg">
+          <div>Fruit Type:</div>
+          <div>Temperature:</div> 
         </div> 
         <div class = "text-lg text-center p-50">
           <p> Webcam:</p>
