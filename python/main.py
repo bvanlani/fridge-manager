@@ -1,23 +1,121 @@
-from arduino.app_utils import App
+from arduino.app_utils import App, Bridge
+from arduino.app_bricks.web_ui import WebUI
 from arduino.app_bricks.web_ui import WebUI
 from arduino.app_bricks.video_imageclassification import VideoImageClassification
-from datetime import datetime, UTC
-import json
 
-ui = WebUI()
-classification_stream = VideoImageClassification(confidence=0.5, debounce_sec=0.0)
+classification_stream = VideoImageClassification()
 
-ui.on_message("override_th", lambda sid, threshold: classification_stream.override_threshold(threshold))
+web_ui = WebUI()
 
-def send_detections_to_ui(classifications: dict):
-    if not classifications:
-        return
-    entries = [
-        {"content": label, "confidence": conf, "timestamp": datetime.now(UTC).isoformat()}
-        for label, conf in classifications.items()
-    ]
-    ui.send_message("classifications", message=json.dumps(entries))
+#transfer to from sketch.ino to web
+def transfer_scensor_values(tempC, humidity):
+    tempF = (tempC*9/5) + 32
+    web_ui.sendmessage("update_scensors", tempC, tempF, humidity)
 
-classification_stream.on_detect_all(send_detections_to_ui)
+Bridge.provide_safe("update_scensors", transfer_scensor_values)
 
-App.run()
+
+def loop():
+    # You can replace this with any code you want your App to run repeatedly.
+
+    def rottenTomato():
+        print("Rotten Tomato")
+
+    classification_stream.on_detect("rotten tomato", rottenTomato)
+
+    def freshTomato():
+        print("Fresh Tomato")
+
+    classification_stream.on_detect("fresh tomato", freshTomato)
+
+    def rottenPotato():
+        print("Rotten Potato")
+
+    classification_stream.on_detect("rotten potato", rottenPotato)
+
+    def freshPotato():
+        print("Fresh Potato")
+
+    classification_stream.on_detect("fresh potato", freshPotato)
+
+    def rottenOrange():
+        print("Rotten Potato")
+
+    classification_stream.on_detect("rotten orange", rottenOrange)
+
+    def freshOrange():
+        print("Fresh Orange")
+
+    classification_stream.on_detect("fresh orange", freshOrange)
+
+    def rottenOkra():
+        print("Rotten Okra")
+
+    classification_stream.on_detect("rotten okra", rottenOkra)
+
+    def freshOkra():
+        print("Fresh Okra")
+
+    classification_stream.on_detect("fresh potato", freshOkra)    
+
+    def rottenCucumber():
+        print("Rotten Cucumber")
+
+    classification_stream.on_detect("rotten cucumber", rottenCucumber)
+
+    def freshCucumber():
+        print("Fresh Cucumber")
+
+    classification_stream.on_detect("fresh cucumber", freshCucumber)    
+
+    def rottenCapsicm():
+        print("Rotten Capsicm")
+
+    classification_stream.on_detect("rotten capsicm", rottenCapsicm)
+
+    def freshCapsicm():
+        print("Fresh Capsicm")
+
+    classification_stream.on_detect("fresh capsicm", freshCapsicm)    
+
+    def rottenBitterGroud():
+        print("Rotten Bitter Groud")
+
+    classification_stream.on_detect("rotten bitter groud", rottenBitterGroud)
+
+    def freshBitterGroud():
+        print("Fresh Bitter Groud")
+
+    classification_stream.on_detect("fresh bitter groud", freshBitterGroud)    
+
+    def rottenBanana():
+        print("Rotten Banana")
+
+    classification_stream.on_detect("rotten banana", rottenBanana)
+
+    def freshBanana():
+        print("Fresh Banana")
+
+    classification_stream.on_detect("fresh banana", freshBanana)    
+
+    def rottenApple():
+        print("Rotten Apple")
+
+    classification_stream.on_detect("rotten apple", rottenApple)
+
+    def freshApple():
+        print("Fresh Apple")
+
+    classification_stream.on_detect("fresh apple", freshApple)
+    
+    def all_detected(results):
+        print("Results: ", results)
+
+    classification_stream.on_detect_all(all_detected)
+    
+    time.sleep(10)
+
+
+
+# See: https://docs.arduino.cc/software/app-lab/tutorials/getting-started/#app-run
+App.run(user_loop=loop)
