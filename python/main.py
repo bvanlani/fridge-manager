@@ -1,10 +1,21 @@
 import time
 
-from arduino.app_utils import App
+from arduino.app_utils import App, Bridge
+from arduino.app_bricks.web_ui import WebUI
 
 from arduino.app_bricks.video_imageclassification import VideoImageClassification
 
 classification_stream = VideoImageClassification()
+
+web_ui = WebUI()
+
+#transfer to from sketch.ino to web
+def transfer_scensor_values(tempC, humidity):
+    tempF = (tempC*9/5) + 32
+    web_ui.sendmessage("update_scensors", tempC, tempF, humidity)
+
+Bridge.provide_safe("update_scensors", transfer_scensor_values)
+
 
 def loop():
     # You can replace this with any code you want your App to run repeatedly.
@@ -105,6 +116,7 @@ def loop():
     classification_stream.on_detect_all(all_detected)
     
     time.sleep(10)
+
 
 
 # See: https://docs.arduino.cc/software/app-lab/tutorials/getting-started/#app-run
