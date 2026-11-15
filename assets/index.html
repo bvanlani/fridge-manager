@@ -11,29 +11,48 @@ SPDX-License-Identifier: MPL-2.0
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fridge Manager</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style type="text/tailwindcss">
         @theme {
           --color-primary: #8EBAE6;
-          --color-secondary: #EDF1F4;
+          --color-background: #EDEFF0;
+          --color-card: #D6E4F1;
+
+          --font-display: "Google Sans", sans-serif;
         }
       </style>
   </head>
   
-  <body>
-  <header class = "bg-primary">
+  <body class="bg-background h-screen font-display">
+  <header class="h-1/8 bg-card">
     <h1 class="font-bold text-4xl text-center p-7.5"> Fridge Manager Admin Panel: </h1>
   </header>
 
-  <main class = "bg-secondary">
-    <div class = "grid grid-row-2">
-        <div class = "grid grid-col 3 text-lg">
-          <div>Fruit Type:</div>
-          <div>Temperature:</div> 
-        </div> 
-        <div class = "text-lg text-center p-50">
-          <p> Webcam:</p>
-        </div> 
+  <main class="h-7/8 pt-16">
+    <div class = "grid grid-cols-2 h-full">
+      <div class="text-4xl flex flex-col items-center">
+        <div class="flex justify-between w-3/4">
+          <p>Temp:</p>
+          <p>38°F</p>
+        </div>  
+        <div class="flex justify-between w-3/4">
+          <p>Humidity:</p>
+          <p>32%</p>
+        </div>
+        <div class="flex justify-between w-3/4">
+          <p>Condition:</p>
+          <p class="text-lime-600">Fresh</p>
+        </div>
+      </div>
+      <div class="flex flex-col items-center"> 
+        <h2 class="text-5xl">Apples</h2>
+        <img src="/webcam.jpg" class="rounded-xl border-8 border-solid border-primary aspect-16/9 m-4"></img>
+      </div>
     </div>
   </main>
     <script src="libs/socket.io.min.js"></script>
